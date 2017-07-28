@@ -39,7 +39,7 @@
 }
 
 - (IBAction)refresh:(id)sender {
-    
+    [self downloadWithCompletionHandler:nil];
 }
 
 - (IBAction)launch:(id)sender {

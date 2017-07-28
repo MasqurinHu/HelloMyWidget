@@ -459,6 +459,7 @@
 				459C65671F29DC8500A06324 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		459C657B1F29DCC200A06324 /* Build configuration list for PBXNativeTarget "HelloWidgetMap" */ = {
 			isa = XCConfigurationList;
@@ -467,6 +468,7 @@
 				459C657D1F29DCC200A06324 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
