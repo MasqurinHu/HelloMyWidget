@@ -66,6 +66,11 @@
 
 - (IBAction)launch:(id)sender {
     
+    NSURL *url = [NSURL URLWithString:@"myWidget://123"];
+    //因為widget沒有[UIApplication sharedApplication]用self.extensionContext取代
+    [self.extensionContext openURL:url completionHandler:^(BOOL success) {
+        //
+    }];
 }
 -(void) downloadWithCompletionHandler:(void (^)(NCUpdateResult))completionHandler {
     
