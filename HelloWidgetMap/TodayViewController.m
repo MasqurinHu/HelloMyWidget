@@ -27,15 +27,18 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+//widget一起動就呼叫 user沒有使用也會呼叫 因user任何時候都能使用widget
+//背景持續更新給user 蘋果機制判斷呼叫時機
 - (void)widgetPerformUpdateWithCompletionHandler:(void (^)(NCUpdateResult))completionHandler {
     // Perform any setup necessary in order to update the view.
     
     // If an error is encountered, use NCUpdateResultFailed
-    // If there's no update required, use NCUpdateResultNoData
-    // If there's an update, use NCUpdateResultNewData
+    // If there's no update required, use NCUpdateResultNoData成功sever資料沒更新
+    // If there's an update, use NCUpdateResultNewData成功有資料
+    //系統收集資料 判斷系統呼叫頻率
+    [self downloadWithCompletionHandler:completionHandler];
 
-    completionHandler(NCUpdateResultNewData);
+//    completionHandler(NCUpdateResultNewData);
 }
 
 - (IBAction)refresh:(id)sender {
@@ -57,6 +60,10 @@
         
         if (error) {
             NSLog(@"Download Error: %@",error);
+            //下載失敗回報
+            if (completionHandler != nil) {
+                completionHandler(NCUpdateResultFailed);
+            }
             return ;
         }
         
@@ -64,6 +71,11 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             self.mainImageView.image = image;
         });
+        
+        //下載成功回報
+        if (completionHandler != nil) {
+            completionHandler(NCUpdateResultNewData);
+        }
         
     }];
     [task resume];
