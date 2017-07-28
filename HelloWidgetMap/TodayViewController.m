@@ -21,6 +21,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.preferredContentSize = CGSizeMake(320.0, 320.0); //for ios9 and before 10之後無效
+    //預設com 宰版 設定exp可支援展開
+    self.extensionContext.widgetLargestAvailableDisplayMode = NCWidgetDisplayModeExpanded;
+}
+
+//顯示模式被切換呼叫
+-(void)widgetActiveDisplayModeDidChange:(NCWidgetDisplayMode)activeDisplayMode
+                        withMaximumSize:(CGSize)maxSize{
+    if (activeDisplayMode == NCWidgetDisplayModeCompact) {
+        self.preferredContentSize = CGSizeMake(100.0, 100.0);
+    }else if (activeDisplayMode == NCWidgetDisplayModeExpanded){
+        self.preferredContentSize = CGSizeMake(320.0, 320.0);
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,7 +86,7 @@
             self.mainImageView.image = image;
         });
         
-        //下載成功回報
+        //下載成功回報 正常需要保存記錄 比對是否重複下載
         if (completionHandler != nil) {
             completionHandler(NCUpdateResultNewData);
         }
