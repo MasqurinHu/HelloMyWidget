@@ -22,16 +22,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.preferredContentSize = CGSizeMake(320.0, 320.0); //for ios9 and before 10之後無效
+    self.preferredContentSize = CGSizeMake(320.0, 320.0); //for ios9 and before 10之後需要再exp模式下才有用
     //預設com 宰版 設定exp可支援展開
-    self.extensionContext.widgetLargestAvailableDisplayMode = NCWidgetDisplayModeExpanded;
+    //檢查這個事件是否支援這個方法 比版本判斷更好用
+    if ([self.extensionContext respondsToSelector:@selector(widgetLargestAvailableDisplayMode)]) {
+        self.extensionContext.widgetLargestAvailableDisplayMode = NCWidgetDisplayModeExpanded;
+    }
+    
 }
 
 //顯示模式被切換呼叫
 -(void)widgetActiveDisplayModeDidChange:(NCWidgetDisplayMode)activeDisplayMode
                         withMaximumSize:(CGSize)maxSize{
+    //大小切換做什麼
     if (activeDisplayMode == NCWidgetDisplayModeCompact) {
-        self.preferredContentSize = CGSizeMake(100.0, 100.0);
+        //        self.preferredContentSize = CGSizeMake(100.0, 100.0);
     }else if (activeDisplayMode == NCWidgetDisplayModeExpanded){
         self.preferredContentSize = CGSizeMake(320.0, 320.0);
     }
